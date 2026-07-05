@@ -1,0 +1,23 @@
+# Environment variables (contains API keys)
+.env
+
+# ChromaDB persistent data
+chroma_db/
+test_chroma/
+
+# Virtual environment
+venv_phase1/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Package build artifacts
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# Test cache
+.pytest_cache/
