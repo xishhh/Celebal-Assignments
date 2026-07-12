@@ -1,0 +1,162 @@
+{
+  "validation": {
+    "accuracy": 97.18,
+    "per_class": [
+      {
+        "class": "AnnualCrop",
+        "precision": 97.95,
+        "recall": 95.75,
+        "f1_score": 96.84,
+        "support": 400
+      },
+      {
+        "class": "Forest",
+        "precision": 98.51,
+        "recall": 99.25,
+        "f1_score": 98.88,
+        "support": 400
+      },
+      {
+        "class": "HerbaceousVegetation",
+        "precision": 94.42,
+        "recall": 97.25,
+        "f1_score": 95.81,
+        "support": 400
+      },
+      {
+        "class": "Highway",
+        "precision": 97.69,
+        "recall": 95.25,
+        "f1_score": 96.46,
+        "support": 400
+      },
+      {
+        "class": "Industrial",
+        "precision": 99.74,
+        "recall": 97.0,
+        "f1_score": 98.35,
+        "support": 400
+      },
+      {
+        "class": "Pasture",
+        "precision": 95.99,
+        "recall": 95.67,
+        "f1_score": 95.83,
+        "support": 300
+      },
+      {
+        "class": "PermanentCrop",
+        "precision": 94.71,
+        "recall": 94.0,
+        "f1_score": 94.35,
+        "support": 400
+      },
+      {
+        "class": "Residential",
+        "precision": 98.27,
+        "recall": 99.5,
+        "f1_score": 98.88,
+        "support": 400
+      },
+      {
+        "class": "River",
+        "precision": 94.71,
+        "recall": 98.5,
+        "f1_score": 96.57,
+        "support": 400
+      },
+      {
+        "class": "SeaLake",
+        "precision": 99.75,
+        "recall": 99.25,
+        "f1_score": 99.5,
+        "support": 400
+      }
+    ],
+    "macro_avg": {
+      "precision": 97.17,
+      "recall": 97.14,
+      "f1_score": 97.15
+    }
+  },
+  "test": {
+    "accuracy": 97.62,
+    "per_class": [
+      {
+        "class": "AnnualCrop",
+        "precision": 99.36,
+        "recall": 93.4,
+        "f1_score": 96.29,
+        "support": 500
+      },
+      {
+        "class": "Forest",
+        "precision": 98.81,
+        "recall": 99.6,
+        "f1_score": 99.2,
+        "support": 500
+      },
+      {
+        "class": "HerbaceousVegetation",
+        "precision": 96.81,
+        "recall": 97.2,
+        "f1_score": 97.01,
+        "support": 500
+      },
+      {
+        "class": "Highway",
+        "precision": 97.97,
+        "recall": 96.67,
+        "f1_score": 97.32,
+        "support": 300
+      },
+      {
+        "class": "Industrial",
+        "precision": 98.02,
+        "recall": 99.0,
+        "f1_score": 98.51,
+        "support": 300
+      },
+      {
+        "class": "Pasture",
+        "precision": 95.44,
+        "recall": 97.67,
+        "f1_score": 96.54,
+        "support": 300
+      },
+      {
+        "class": "PermanentCrop",
+        "precision": 91.32,
+        "recall": 94.67,
+        "f1_score": 92.96,
+        "support": 300
+      },
+      {
+        "class": "Residential",
+        "precision": 99.8,
+        "recall": 99.2,
+        "f1_score": 99.5,
+        "support": 500
+      },
+      {
+        "class": "River",
+        "precision": 96.13,
+        "recall": 99.33,
+        "f1_score": 97.7,
+        "support": 300
+      },
+      {
+        "class": "SeaLake",
+        "precision": 99.2,
+        "recall": 99.2,
+        "f1_score": 99.2,
+        "support": 500
+      }
+    ],
+    "macro_avg": {
+      "precision": 97.29,
+      "recall": 97.59,
+      "f1_score": 97.42
+    }
+  }
+}

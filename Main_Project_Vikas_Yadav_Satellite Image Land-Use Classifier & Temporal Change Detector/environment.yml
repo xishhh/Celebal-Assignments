@@ -1,0 +1,43 @@
+# ═══════════════════════════════════════════════════════════════════
+#  Satellite Land-Use Classifier — Conda Environment
+#  Create: conda env create -f environment.yml
+#  Update: conda env update -f environment.yml
+# ═══════════════════════════════════════════════════════════════════
+
+name: satellite-landuse
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.9
+  - pip
+
+  # Deep Learning
+  - pytorch>=2.0.0
+  - torchvision>=0.15.0
+  - cpuonly  # remove this line if using CUDA
+
+  # Image Processing
+  - numpy>=1.24.0
+  - Pillow>=10.0.0
+  - opencv>=4.8.0
+
+  # ML / Utilities
+  - scikit-learn>=1.3.0
+  - tqdm>=4.65.0
+
+  # Visualization
+  - matplotlib>=3.7.0
+
+  # App
+  - streamlit>=1.27.0
+
+  # Development (optional)
+  - pytest>=7.4.0
+  - black>=23.0.0
+  - flake8>=6.1.0
+  - mypy>=1.5.0
+
+  - pip:
+    # (no pip-only packages required)

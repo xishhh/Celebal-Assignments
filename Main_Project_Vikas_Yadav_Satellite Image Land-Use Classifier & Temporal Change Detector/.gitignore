@@ -1,0 +1,103 @@
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.pyo
+
+# ============================================================
+# Virtual Environments
+# ============================================================
+.venv/
+venv/
+env/
+ENV/
+.env/
+
+# ============================================================
+# Jupyter Notebooks (outputs/checkpoints only)
+# ============================================================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ============================================================
+# ML Model Weights & Checkpoints  (large binary files)
+# ============================================================
+satellite-landuse/models/
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.pkl
+*.pickle
+*.bin
+*.onnx
+
+# ============================================================
+# Datasets (raw satellite imagery — very large)
+# ============================================================
+satellite-landuse/data/raw/
+satellite-landuse/data/processed/
+satellite-landuse/data/splits/
+
+# Keep the data/ folder itself tracked (via .gitkeep if needed)
+!satellite-landuse/data/.gitkeep
+
+# ============================================================
+# Embeddings (large NumPy archives)
+# ============================================================
+satellite-landuse/embeddings/
+*.npz
+*.npy
+
+# ============================================================
+# IDE / Editor
+# ============================================================
+.vscode/
+.idea/
+*.code-workspace
+.opencode/
+
+# ============================================================
+# OS Generated Files
+# ============================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# ============================================================
+# Secrets / API Keys / Config Overrides
+# ============================================================
+.env
+.env.*
+secrets.yaml
+secrets.json
+*.key
+
+# ============================================================
+# Logs & Temp Files
+# ============================================================
+*.log
+*.tmp
+*.bak
+*.swp
+logs/
+tmp/
+
+# ============================================================
+# Reports — generated artifacts (optional: keep or ignore)
+# Uncomment the lines below if you don't want to push PNGs/CSVs
+# ============================================================
+# satellite-landuse/reports/*.png
+# satellite-landuse/reports/*.csv
+# satellite-landuse/reports/*.json
+
+
