@@ -186,9 +186,9 @@ The baseline is a lightweight **SimpleCNN** trained from random weight initialis
 - Global Average Pooling
 - Dropout (0.5) + Linear classifier
 
-**Training:** 1 epoch on EuroSAT training set, Adam optimiser, EarlyStopping on validation loss.
+**Training:** 5 epochs on EuroSAT training set, Adam optimiser, EarlyStopping on validation loss.
 
-**Result:** The baseline achieved **60.6% accuracy** and **58.1% macro-F1** on the EuroSAT test set after one epoch — demonstrating that learning meaningful spectral and spatial features requires either more epochs or a pretrained backbone.
+**Result:** The baseline achieved **60.6% accuracy** and **58.1% macro-F1** on the EuroSAT test set — demonstrating that learning meaningful spectral and spatial features requires either more epochs or a pretrained backbone.
 
 <details>
 <summary>📋 Per-class F1 — Baseline CNN</summary>
@@ -213,7 +213,6 @@ The baseline is a lightweight **SimpleCNN** trained from random weight initialis
 
 ![Loss curve](assets/loss_curve.png)
 ![Accuracy curve](assets/accuracy_curve.png)
-![Confusion matrix](assets/confusion_matrix.png)
 
 </div>
 
@@ -387,9 +386,9 @@ An interactive **Streamlit dashboard** provides a fully local, no-internet infer
 
 <div align="center">
 
-> 📸 *Dashboard screenshot — add after recording a demo session*
->
-> `assets/dashboard.png` ← replace this placeholder once captured
+**Streamlit Geo-Dashboard — Live Inference Interface**
+
+![Dashboard Screenshot](assets/dashboard.png)
 
 </div>
 
@@ -506,7 +505,7 @@ A walkthrough video demonstrating the full project — baseline training, transf
 
 **Google Drive Link**
 
-> 🔗 [`PASTE_VIDEO_LINK_HERE`](PASTE_VIDEO_LINK_HERE)
+> 🔗 [▶️ Watch Full Project Walkthrough](https://drive.google.com/file/d/1TuBkinimRC97n7RRR6Gg9Boh60oyiNAN/view?usp=sharing)
 
 ---
 
