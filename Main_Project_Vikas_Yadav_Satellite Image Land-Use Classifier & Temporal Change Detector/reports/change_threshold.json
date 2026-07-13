@@ -1,0 +1,6 @@
+{
+  "selected_threshold": 0.620448,
+  "roc_auc": 0.986,
+  "optimal_tpr": 0.941,
+  "optimal_fpr": 0.0522
+}

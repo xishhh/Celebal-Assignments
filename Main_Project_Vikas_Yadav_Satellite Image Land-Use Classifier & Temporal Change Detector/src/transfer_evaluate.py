@@ -597,41 +597,77 @@ class TransferEvaluator:
         targets: np.ndarray,
         probs: np.ndarray,
     ) -> None:
-        """Find top-5 most confidently misclassified images and generate report."""
+        """Complete error analysis required by Phase 7.
+
+        Generates:
+          - reports/error_analysis/top5_errors.csv
+          - reports/error_analysis/error_analysis.md
+          - reports/error_analysis/error_1.png ... error_5.png
+
+        Deterministic Top-5 criterion:
+          - highest confidence assigned to the incorrect predicted class
+          - ties broken by image ID.
+        """
         model.eval()
-        all_images: List = []
-        all_preds2: List = []
-        all_targets2: List = []
-        all_conf: List = []
 
-        pbar = tqdm(test_loader, desc="Error analysis")
+        errors: List[Dict[str, Any]] = []
+
+        # EuroSATDataset returns (image_tensor, label) only, so we store a
+        # deterministic identifier instead of a true filesystem path.
+        global_idx = 0
+        pbar = tqdm(test_loader, desc="Error analysis (collect misclassifications)")
         for images, labels in pbar:
-            ims = images.cpu()
             images_gpu = images.to(self.device, non_blocking=True)
-            logits = model(images_gpu)
-            probs_batch = torch.softmax(logits, dim=1).cpu()
-            preds_batch = logits.argmax(dim=1).cpu()
+            with torch.no_grad():
+                logits = model(images_gpu)
+                probs_batch = torch.softmax(logits, dim=1)
+                preds_batch = logits.argmax(dim=1)
 
-            for j in range(len(ims)):
-                if preds_batch[j].item() != labels[j].item():
-                    all_images.append(ims[j])
-                    all_preds2.append(preds_batch[j].item())
-                    all_targets2.append(labels[j].item())
-                    all_conf.append(probs_batch[j, preds_batch[j]].item())
+            images_cpu = images.detach().cpu()
+            labels_cpu = labels.detach().cpu()
+            preds_cpu = preds_batch.detach().cpu()
+            probs_cpu = probs_batch.detach().cpu()
 
-            if len(all_images) >= 50:
-                break
+            for j in range(images_cpu.shape[0]):
+                gt_idx = int(labels_cpu[j].item())
+                pred_idx = int(preds_cpu[j].item())
+                if pred_idx != gt_idx:
+                    pred_conf = float(probs_cpu[j, pred_idx].item())
+                    gt_prob = float(probs_cpu[j, gt_idx].item())
+                    errors.append(
+                        {
+                            "image_path": f"euroSAT_test_{global_idx:07d}",
+                            "ground_truth": gt_idx,
+                            "predicted_class": pred_idx,
+                            "prediction_confidence": pred_conf,
+                            "ground_truth_probability": gt_prob,
+                            "_image_tensor": images_cpu[j],
+                            "_local_index": global_idx,
+                        }
+                    )
+                global_idx += 1
 
-        all_conf_arr = np.array(all_conf)
-        top_idxs = np.argsort(-all_conf_arr)[:5]
+        if not errors:
+            logger.warning("No misclassifications found; skipping error analysis outputs.")
+            return
+
+        def _sort_key(e: Dict[str, Any]):
+            return (
+                -float(e["prediction_confidence"]),
+                str(e["image_path"]),
+                int(e["_local_index"]),
+            )
+
+        top5 = sorted(errors, key=_sort_key)[:5]
+
 
         fig, axes = plt.subplots(1, 5, figsize=(20, 4))
         errors_md = []
-        for ax_idx, data_idx in enumerate(top_idxs):
-            img = all_images[data_idx]
-            true_label = self.cfg.CLASS_NAMES[all_targets2[data_idx]]
-            pred_label = self.cfg.CLASS_NAMES[all_preds2[data_idx]]
-            confidence = all_conf_arr[data_idx] * 100.0
+        for ax_idx, err in enumerate(top5):
+            img = err["_image_tensor"]
+            true_label = self.cfg.CLASS_NAMES[err["ground_truth"]]
+            pred_label = self.cfg.CLASS_NAMES[err["predicted_class"]]
+            confidence = err["prediction_confidence"] * 100.0
 
             # Denormalize for display
             mean = torch.tensor([0.485, 0.456, 0.406]).view(3, 1, 1)

@@ -1,0 +1,6 @@
+metric,random_split,spatial_split,gap
+Accuracy (%),98.44,97.38,1.06
+Macro F1 (%),98.39,97.2,1.19
+Macro Precision (%),98.37,96.98,1.39
+Macro Recall (%),98.44,97.51,0.93
+Test Samples,4050,4000,

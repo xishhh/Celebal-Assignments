@@ -159,24 +159,26 @@ class RegionPairGenerator:
 
         pairs: List[Tuple[str, str, int, str, str, int]] = []
         seen: set = set()
+        n_unchanged = 0
+        n_changed = 0
 
         # ── Phase 1: unchanged pairs ──────────────────────────────────
         # Conditions: same class, same region, DIFFERENT offsets
         for region_id in sorted_region_ids:
-            if sum(1 for p in pairs if p[2] == 0) >= num_unchanged:
+            if n_unchanged >= num_unchanged:
                 break
             region = regions[region_id]
             for cls_idx, entries in region.items():
                 unique_offsets = {e[0] for e in entries}
                 if len(unique_offsets) < 2:
                     continue
-                n_done = sum(1 for p in pairs if p[2] == 0)
-                if n_done >= num_unchanged:
+                if n_unchanged >= num_unchanged:
                     break
                 n_possible = len(unique_offsets) * (len(unique_offsets) - 1) // 2
-                n_take = min(num_unchanged - n_done, n_possible)
+                n_take = min(num_unchanged - n_unchanged, n_possible)
+                n_target = n_unchanged + n_take
                 attempts = 0
-                while sum(1 for p in pairs if p[2] == 0) < n_done + n_take and attempts < n_take * 10:
+                while n_unchanged < n_target and attempts < n_take * 10:
                     attempts += 1
                     if len(entries) < 2:
                         break
@@ -192,11 +194,12 @@ class RegionPairGenerator:
                         class_names[cls_idx], class_names[cls_idx],
                         region_id,
                     ))
+                    n_unchanged += 1
 
         # ── Phase 2: changed pairs ────────────────────────────────────
         # Conditions: same offset within region, DIFFERENT classes
         for region_id in sorted_region_ids:
-            if sum(1 for p in pairs if p[2] == 1) >= num_changed:
+            if n_changed >= num_changed:
                 break
             region = regions[region_id]
 
@@ -211,10 +214,13 @@ class RegionPairGenerator:
             self._rng.shuffle(multi_class_offsets)
 
             for offset in multi_class_offsets:
-                if sum(1 for p in pairs if p[2] == 1) >= num_changed:
+                if n_changed >= num_changed:
                     break
                 classes = list(offset_to_classes[offset].items())
-                while sum(1 for p in pairs if p[2] == 1) < num_changed:
+                n_possible = len(classes) * (len(classes) - 1)
+                attempts = 0
+                while n_changed < num_changed and attempts < n_possible * 10:
+                    attempts += 1
                     (cls1, path1), (cls2, path2) = self._rng.sample(classes, 2)
                     key = (str(path1), str(path2))
                     if key in seen:
@@ -225,6 +231,7 @@ class RegionPairGenerator:
                         class_names[cls1], class_names[cls2],
                         region_id,
                     ))
+                    n_changed += 1
 
         self._rng.shuffle(pairs)
 
